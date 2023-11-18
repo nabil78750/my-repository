@@ -2,21 +2,26 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
-const cloudinary = require("cloudinary").v2;
-const User = require("./models/User");
+const cloudinary = require("cloudinary");
 const Offer = require("./models/Offer");
 const app = express();
 app.use(cors());
+app.use(express.json());
 mongoose.connect(process.env.MONGODB_URI);
 
 cloudinary.config({
-  cloud_name: "dxxgz9rpt",
-  api_key: "698684197735757",
-  api_secret: "wTeo75MJ-tcNRx0GLS3vhOyfhWU",
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_PUBLIC_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY,
 });
 
-mongoose.connect("mongodb://localhost:27017/Vinted");
-app.use(express.json());
+app.get("/", (req, res) => {
+  try {
+    return res.status(200).json("Bienvenue sur l'API Vinted !");
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
 
 const userRoutes = require("./routes/user");
 app.use(userRoutes);
