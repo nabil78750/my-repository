@@ -34,6 +34,8 @@ app.all("*"),
     res.statue(404).json({ message: "This route dose not exist" });
   };
 
-app.listen(3000, () => {
+console.log("Coucou tout le monde ! 👋👋👋👋👋");
+
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server started");
 });
